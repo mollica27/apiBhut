@@ -1,5 +1,4 @@
 // controllers/carController.js
-const axios = require('axios');
 const carService = require('../services/carService');
 
 exports.listCars = async (req, res) => {
@@ -14,10 +13,11 @@ exports.listCars = async (req, res) => {
 
 exports.createCar = async (req, res) => {
   try {
-    const car = await carService.createCarInExternalAPI(req.body);
+    const carData = req.body;
+    const car = await carService.createCarInExternalAPI(carData);
 
     // Salvar registro na tabela de logs
-    await carService.saveLog(car.id);
+    await carService.saveLog(car._id);
 
     // Postar informação do carro criado para a fila
     await carService.postToQueue(car);
