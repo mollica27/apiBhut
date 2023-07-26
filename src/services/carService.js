@@ -2,7 +2,7 @@
 const axios = require('axios');
 const Car = require('../models/carModel');
 const Log = require('../models/logModel');
-const carQueue = require('../queues/carQueue').default;
+const carQueue = require('../queues/carQueue');
 
 const getCarsFromExternalAPI = async () => {
   const response = await axios.get('http://api-test.bhut.com.br:3000/api/cars');
