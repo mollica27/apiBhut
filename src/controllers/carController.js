@@ -28,6 +28,7 @@ exports.createCar = async (req, res) => {
     });
 
     await carService.saveLog(car._id);
+    
     console.log('Carro criado com sucesso');
     res.json(savedCar);
   } catch (error) {

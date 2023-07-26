@@ -7,8 +7,7 @@ const logRoutes = require('./routes/logRoutes');
 const carQueue = require('./queues/carQueue');
 const axios = require('axios');
 const webhookQueue = require('./queues/webhookQueue');
-const webhookRoutes = require('./routes/webhookRoutes');
-
+const webhookRoutes = require('./routes/webhookRoutes'); // Adicione essa linha
 
 const app = express();
 app.use(express.json());
@@ -29,7 +28,7 @@ mongoose.connect(process.env.CONNECTIONSTRING, {
 // Rotas
 app.use('/api', carRoutes);
 app.use('/api', logRoutes);
-app.use('/api', webhookRoutes);
+app.use('/api', webhookRoutes); // Adicione essa linha
 
 // Tratamento da fila usando Bull
 carQueue.process(async (job) => {
@@ -37,6 +36,10 @@ carQueue.process(async (job) => {
     const carData = job.data;
     // Supondo que a API externa aceite POST na rota /api/cars
     const response = await axios.post('http://api-test.bhut.com.br:3000/api/cars', carData);
+
+    // Postar o carro criado para a fila de webhooks
+    await webhookQueue.add(response.data); // Substitua "webhookQueue" pelo nome da sua fila de webhooks
+    console.log('Carro enviado para a fila de webhooks:', response.data);
 
     // Salvar registro na tabela de logs
     const log = {
@@ -46,10 +49,6 @@ carQueue.process(async (job) => {
     await Log.create(log);
 
     console.log('Carro criado na API externa e registro de log salvo:', response.data);
-
-    // Postar o carro criado para a fila de webhooks
-    await webhookQueue.add(response.data); // Substitua "webhookQueue" pelo nome da sua fila de webhooks
-    console.log('Carro enviado para a fila de webhooks:', response.data);
 
   } catch (error) {
     console.error('Erro ao criar carro ou enviar para a fila:', error.message);
@@ -65,4 +64,3 @@ app.on('Conectado', () => {
     console.log(`Acessar http://localhost:${port}`);
   });
 });
-

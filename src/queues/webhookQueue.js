@@ -8,7 +8,7 @@ webhookQueue.process(async (job) => {
   const webhookData = job.data;
 
   // Substitua a URL do webhook pelo endpoint do seu servidor ou serviço que receberá o webhook
-  const webhookUrl = 'http://localhost:3000/webhook';
+  const webhookUrl = 'http://localhost:3000/api/webhook';
 
   try {
     // Enviar a requisição do webhook
