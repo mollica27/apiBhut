@@ -6,6 +6,9 @@ const carRoutes = require('./routes/carRoutes');
 const logRoutes = require('./routes/logRoutes');
 const carQueue = require('./queues/carQueue');
 const axios = require('axios');
+const webhookQueue = require('./queues/webhookQueue');
+const webhookRoutes = require('./routes/webhookRoutes');
+
 
 const app = express();
 app.use(express.json());
@@ -26,6 +29,7 @@ mongoose.connect(process.env.CONNECTIONSTRING, {
 // Rotas
 app.use('/api', carRoutes);
 app.use('/api', logRoutes);
+app.use('/api', webhookRoutes);
 
 // Tratamento da fila usando Bull
 carQueue.process(async (job) => {
@@ -42,6 +46,11 @@ carQueue.process(async (job) => {
     await Log.create(log);
 
     console.log('Carro criado na API externa e registro de log salvo:', response.data);
+
+    // Postar o carro criado para a fila de webhooks
+    await webhookQueue.add(response.data); // Substitua "webhookQueue" pelo nome da sua fila de webhooks
+    console.log('Carro enviado para a fila de webhooks:', response.data);
+
   } catch (error) {
     console.error('Erro ao criar carro ou enviar para a fila:', error.message);
     // Trate o erro aqui, você pode reenfileirar a tarefa para tentar novamente ou registrar o erro em um log, por exemplo
@@ -53,7 +62,7 @@ app.on('Conectado', () => {
   const port = process.env.PORT;
   app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}🚀`);
-    console.log(`Acessar http://localhost:${port}⚡`);
+    console.log(`Acessar http://localhost:${port}`);
   });
 });
 
