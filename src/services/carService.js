@@ -1,6 +1,5 @@
 // services/carService.js
 const axios = require('axios');
-const Car = require('../models/carModel');
 const Log = require('../models/logModel');
 const carQueue = require('../queues/carQueue');
 
