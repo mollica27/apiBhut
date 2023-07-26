@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 
 const carSchema = new mongoose.Schema({
-  _id: mongoose.Types.ObjectId, // Aqui definimos o campo do ID
   title: {
     type: String,
     required: true,

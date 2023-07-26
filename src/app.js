@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 // Configuração do MongoDB
-const mongoURI = 'mongodb+srv://natanmollica:RlBvO9i1K62LQUXB@cluster0.u10mcvs.mongodb.net/car_logs?retryWrites=true&w=majority'; // Substitua pelo URI do seu banco de dados MongoDB
+const mongoURI = ''; // Substitua pelo URI do seu banco de dados MongoDB
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
