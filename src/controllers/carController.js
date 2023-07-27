@@ -40,7 +40,7 @@ exports.createCar = async (req, res) => {
     // Salvar log do carro criado
     await carService.saveLog(savedCar._id);
 
-    console.log('Carro criado com sucesso');
+    console.log('Carro criado com sucesso', savedCar);
     res.json(savedCar);
   } catch (error) {
     console.error('Erro ao criar carro ou enviar para a fila:', error.message);

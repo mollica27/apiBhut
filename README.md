@@ -61,6 +61,10 @@ A API possui os seguintes endpoints:
 2. `POST /api/createCar`: Cria um novo carro na API externa e salva um registro de log no MongoDB.
 3. `GET /api/logs`: Retorna a lista de registros de log salvos no MongoDB.
 
+## Webhook
+
+A API possui um endpoint para receber webhooks de eventos externos. O endpoint é `POST /webhook`. Quando um webhook é recebido, a API processa os dados e os exibe no navegador.
+
 ### Testando a API com o Insomnia
 
 1. Abra o Insomnia ou outra ferramenta de teste de API.
@@ -100,3 +104,5 @@ A API possui os seguintes endpoints:
 Este é um guia básico de como usar a API de Carros. Você pode explorar os endpoints e as funcionalidades adicionais da API para atender às suas necessidades específicas. Para mais detalhes sobre cada endpoint e suas funcionalidades, consulte o código-fonte do projeto.
 
 Se você tiver alguma dúvida ou encontrar problemas ao usar a API, sinta-se à vontade para abrir uma issue no repositório do projeto. Esperamos que este guia tenha sido útil e que você possa aproveitar a API de Carros em seus projetos!
+
+
