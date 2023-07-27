@@ -4,7 +4,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const carRoutes = require('./routes/carRoutes');
 const logRoutes = require('./routes/logRoutes');
-const axios = require('axios');
+const webhookRoutes = require('./routes/webhookRoutes');
+
 
 const app = express();
 app.use(express.json());
@@ -25,7 +26,7 @@ mongoose.connect(process.env.CONNECTIONSTRING, {
 // Rotas
 app.use('/api', carRoutes);
 app.use('/api', logRoutes);
-
+app.use('/webhook', webhookRoutes);
 
 app.on('Conectado', () => {
   // Iniciar servidor

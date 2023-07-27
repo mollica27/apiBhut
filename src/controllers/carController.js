@@ -1,7 +1,8 @@
 // controllers/carController.js
 const carService = require('../services/carService');
 const Car = require('../models/carModel');
-const axios = require('axios');
+const carQueue = require('../queues/carQueue');
+const webhookQueue = require('../queues/webhookQueue');
 
 exports.listCars = async (req, res) => {
   try {
@@ -28,11 +29,17 @@ exports.createCar = async (req, res) => {
       age: car.age,
     });
 
-    await carService.saveLog(car._id);
+    // Postar informação do carro criado para a fila de webhooks
+    webhookQueue.add({
+      title: savedCar.title,
+      brand: savedCar.brand,
+      price: savedCar.price,
+      age: savedCar.age,
+    });
 
-    const webhookUrl = 'http://api-test.bhut.com.br:3000/api/cars';
-    await axios.post(webhookUrl, savedCar);
-    
+    // Salvar log do carro criado
+    await carService.saveLog(savedCar._id);
+
     console.log('Carro criado com sucesso');
     res.json(savedCar);
   } catch (error) {
