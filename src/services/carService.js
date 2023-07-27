@@ -1,7 +1,7 @@
 // services/carService.js
 const axios = require('axios');
 const Log = require('../models/logModel');
-const carQueue = require('../queues/carQueue');
+
 
 const getCarsFromExternalAPI = async () => {
   const response = await axios.get('http://api-test.bhut.com.br:3000/api/cars');
@@ -21,13 +21,9 @@ const saveLog = async (carId) => {
   await Log.create(log);
 };
 
-const postToQueue = async (carData) => {
-  await carQueue.add(carData);
-};
 
 module.exports = {
   getCarsFromExternalAPI,
   createCarInExternalAPI,
   saveLog,
-  postToQueue,
 };
