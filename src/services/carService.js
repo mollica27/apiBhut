@@ -13,6 +13,7 @@ const getCarsFromExternalAPI = async () => {
 const createCarInExternalAPI = async (carData) => {
   try {
     const response = await axios.post('http://api-test.bhut.com.br:3000/api/cars', carData);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     

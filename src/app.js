@@ -6,7 +6,6 @@ const carRoutes = require('./routes/carRoutes');
 const logRoutes = require('./routes/logRoutes');
 const webhookRoutes = require('./routes/webhookRoutes');
 
-
 const app = express();
 app.use(express.json());
 
@@ -22,6 +21,7 @@ mongoose.connect(process.env.CONNECTIONSTRING, {
   .catch((error) => {
     console.error('Erro na conexão com o MongoDB:', error.message);
   });
+
 
 // Rotas
 app.use('/api', carRoutes);

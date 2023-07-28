@@ -1,7 +1,6 @@
 // controllers/carController.js
 const carService = require('../services/carService');
 const Car = require('../models/carModel');
-const carQueue = require('../queues/carQueue');
 const webhookQueue = require('../queues/webhookQueue');
 
 exports.listCars = async (req, res) => {

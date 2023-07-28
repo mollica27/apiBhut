@@ -2,13 +2,12 @@
 const axios = require('axios');
 const Queue = require('bull');
 
-// Crie uma instância da fila
 const webhookQueue = new Queue('webhookQueue');
 
 webhookQueue.process(async (job) => {
   
   const webhookData = job.data;
-  console.log(webhookData);  
+  
   const webhookUrl = 'http://localhost:3000/webhook';
 
   try {
